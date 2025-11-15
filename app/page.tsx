@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Progress } from "@/components/ui/progress"
-import { Gift, Copy, Users, Check } from "lucide-react"
+import { Gift, Copy, Users, Check } from 'lucide-react'
 import { toast } from "@/components/ui/use-toast"
 import { BottomNavigation } from "@/components/bottom-navigation"
 import { LionLogo } from "@/components/lion-logo"
@@ -258,7 +258,7 @@ export default function Home() {
               <span className="text-sm font-medium text-gray-700">推薦獎勵</span>
               <div className="flex items-center text-lion-orange font-bold">
                 <Gift className="h-5 w-5 mr-1" />
-                <span>+10 $ZOO</span>
+                <span>+10 $HONEY</span>
               </div>
             </div>
 
@@ -269,7 +269,7 @@ export default function Home() {
 
             <p className="text-sm text-gray-600 bg-lion-teal/10 p-3 rounded-lg border border-lion-teal/20">
               邀請朋友加入 ZOO3，當他們使用您的推薦連結註冊時，您們雙方都將獲得{" "}
-              <span className="font-bold text-lion-teal">10 $ZOO</span> 獎勵！
+              <span className="font-bold text-lion-teal">10 $HONEY</span> 獎勵！
             </p>
 
             <div className="flex gap-2">

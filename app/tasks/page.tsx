@@ -48,7 +48,7 @@ export default function TasksPage() {
       // For now, we'll simulate the verification process
       await new Promise((resolve) => setTimeout(resolve, 2000))
 
-      completeTask("discord", "+5 $ZOO")
+      completeTask("discord", "+5 $HONEY")
 
       toast({
         title: "Discord 驗證成功!",
@@ -71,7 +71,7 @@ export default function TasksPage() {
     try {
       await new Promise((resolve) => setTimeout(resolve, 2000))
 
-      completeTask("telegram", "+5 $ZOO")
+      completeTask("telegram", "+5 $HONEY")
 
       toast({
         title: "Telegram 驗證成功!",
@@ -107,9 +107,9 @@ export default function TasksPage() {
             icon={<MessageSquare className="h-5 w-5 text-white" />}
             title="加入 Discord 社區"
             description="加入 ZOO3 官方 Discord 社區並完成身份驗證"
-            reward="+5 $ZOO"
+            reward="+5 $HONEY"
             isCompleted={completedTasks.includes("discord")}
-            onComplete={() => completeTask("discord", "+5 $ZOO")}
+            onComplete={() => completeTask("discord", "+5 $HONEY")}
             onDiscordCallback={handleDiscordCallback}
             isVerifying={discordVerifying}
           />
@@ -120,9 +120,9 @@ export default function TasksPage() {
             icon={<MessageSquare className="h-5 w-5 text-white" />}
             title="加入 Telegram 社區"
             description="加入 ZOO3 官方 Telegram 社區並完成身份驗證"
-            reward="+5 $ZOO"
+            reward="+5 $HONEY"
             isCompleted={completedTasks.includes("telegram")}
-            onComplete={() => completeTask("telegram", "+5 $ZOO")}
+            onComplete={() => completeTask("telegram", "+5 $HONEY")}
             onTelegramCallback={handleTelegramCallback}
             isVerifying={telegramVerifying}
           />
@@ -296,7 +296,7 @@ function TaskCard({
                   )}
                 </Button>
 
-                <p className="text-xs text-gray-500 text-center">完成驗證後即可獲得 +5 $ZOO 獎勵</p>
+                <p className="text-xs text-gray-500 text-center">完成驗證後即可獲得 +5 $HONEY 獎勵</p>
               </div>
             )}
 
@@ -358,7 +358,7 @@ function TaskCard({
                   )}
                 </Button>
 
-                <p className="text-xs text-gray-500 text-center">完成驗證後即可獲得 +5 $ZOO 獎勵</p>
+                <p className="text-xs text-gray-500 text-center">完成驗證後即可獲得 +5 $HONEY 獎勵</p>
               </div>
             )}
           </div>

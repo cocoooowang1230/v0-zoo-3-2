@@ -1,12 +1,12 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useSearchParams, useRouter } from "next/navigation"
+import { useSearchParams, useRouter } from 'next/navigation'
 import { exchangeCodeForToken, getDiscordUser, checkGuildMembership } from "@/lib/discord-auth"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { LionLogo } from "@/components/lion-logo"
-import { CheckCircle2, XCircle, Loader2 } from "lucide-react"
+import { CheckCircle2, XCircle, Loader2 } from 'lucide-react'
 
 export default function DiscordCallbackPage() {
   const searchParams = useSearchParams()
@@ -86,7 +86,7 @@ export default function DiscordCallbackPage() {
           <>
             <CheckCircle2 className="h-16 w-16 text-green-500 mx-auto" />
             <h2 className="text-xl font-bold text-green-600">{message}</h2>
-            <p className="text-gray-600">您已獲得 +5 $ZOO 獎勵</p>
+            <p className="text-gray-600">您已獲得 +5 $HONEY 獎勵</p>
             <p className="text-sm text-gray-500">正在返回任務頁面...</p>
           </>
         )}

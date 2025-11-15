@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Progress } from "@/components/ui/progress"
-import { Gift, Copy, Users } from "lucide-react"
+import { Gift, Copy, Users } from 'lucide-react'
 import { useLiff } from "./liff-provider"
 import { toast } from "@/components/ui/use-toast"
 import { LineConnectButton } from "@/components/line-connect-button"
@@ -162,7 +162,7 @@ export default function LiffPage() {
                   <p className="text-gray-600">邀請朋友加入 ZOO3，雙方都能獲得獎勵！</p>
                   <div className="flex items-center ml-1 text-lion-orange font-medium">
                     <Gift className="h-4 w-4 mr-1" />
-                    <span>0 $ZOO</span>
+                    <span>0 $HONEY</span>
                   </div>
                 </div>
               </div>
@@ -172,7 +172,7 @@ export default function LiffPage() {
             <p className="text-xs text-gray-500 text-center">0/5 位好友</p>
 
             <p className="text-sm text-gray-600 text-center">
-              邀請朋友加入 ZOO3，當他們使用您的推薦連結註冊時，您們雙方都將獲得 10 $ZOO 獎勵！
+              邀請朋友加入 ZOO3，當他們使用您的推薦連結註冊時，您們雙方都將獲得 10 $HONEY 獎勵！
             </p>
 
             <div className="flex gap-2">
