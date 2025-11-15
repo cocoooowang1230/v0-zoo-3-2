@@ -146,7 +146,7 @@ export default function Home() {
       <header className="bg-gradient-to-r from-lion-orange to-lion-red text-white p-4 text-center shadow-md">
         <div className="flex items-center justify-center gap-2">
           <LionLogo size="sm" />
-          <h1 className="text-2xl font-bold">ZOO3</h1>
+          <h1 className="text-2xl font-bold">BitBee</h1>
         </div>
         <p className="mt-1 text-sm">完成任務獲取獎勵</p>
       </header>
@@ -247,9 +247,9 @@ export default function Home() {
                 <Users className="h-5 w-5 text-white" />
               </div>
               <div>
-                <h2 className="font-bold text-lg text-lion-accent">ZOO3 推薦計劃</h2>
+                <h2 className="font-bold text-lg text-lion-accent">BitBee 推薦計劃</h2>
                 <div className="flex items-center text-sm">
-                  <p className="text-gray-600">邀請朋友加入 ZOO3，雙方都能獲得獎勵！</p>
+                  <p className="text-gray-600">邀請朋友加入 BitBee，雙方都能獲得獎勵！</p>
                 </div>
               </div>
             </div>
@@ -268,7 +268,7 @@ export default function Home() {
             </div>
 
             <p className="text-sm text-gray-600 bg-lion-teal/10 p-3 rounded-lg border border-lion-teal/20">
-              邀請朋友加入 ZOO3，當他們使用您的推薦連結註冊時，您們雙方都將獲得{" "}
+              邀請朋友加入 BitBee，當他們使用您的推薦連結註冊時，您們雙方都將獲得{" "}
               <span className="font-bold text-lion-teal">10 $HONEY</span> 獎勵！
             </p>
 

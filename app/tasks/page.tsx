@@ -106,7 +106,7 @@ export default function TasksPage() {
             id="discord"
             icon={<MessageSquare className="h-5 w-5 text-white" />}
             title="加入 Discord 社區"
-            description="加入 ZOO3 官方 Discord 社區並完成身份驗證"
+            description="加入 BitBee 官方 Discord 社區並完成身份驗證"
             reward="+5 $HONEY"
             isCompleted={completedTasks.includes("discord")}
             onComplete={() => completeTask("discord", "+5 $HONEY")}
@@ -119,7 +119,7 @@ export default function TasksPage() {
             id="telegram"
             icon={<MessageSquare className="h-5 w-5 text-white" />}
             title="加入 Telegram 社區"
-            description="加入 ZOO3 官方 Telegram 社區並完成身份驗證"
+            description="加入 BitBee 官方 Telegram 社區並完成身份驗證"
             reward="+5 $HONEY"
             isCompleted={completedTasks.includes("telegram")}
             onComplete={() => completeTask("telegram", "+5 $HONEY")}

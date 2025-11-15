@@ -54,7 +54,7 @@ export default function LiffPage() {
       <header className="bg-gradient-to-r from-lion-orange to-lion-red text-white p-4 text-center shadow-md">
         <div className="flex items-center justify-center gap-2">
           <span className="text-xl">🐾</span>
-          <h1 className="text-2xl font-bold">ZOO3</h1>
+          <h1 className="text-2xl font-bold">BitBee</h1>
         </div>
         <p className="mt-1 text-sm">完成任務獲取獎勵</p>
       </header>
@@ -159,7 +159,7 @@ export default function LiffPage() {
               <div>
                 <h2 className="font-bold text-lion-accent">推薦計劃</h2>
                 <div className="flex items-center text-sm">
-                  <p className="text-gray-600">邀請朋友加入 ZOO3，雙方都能獲得獎勵！</p>
+                  <p className="text-gray-600">邀請朋友加入 BitBee，雙方都能獲得獎勵！</p>
                   <div className="flex items-center ml-1 text-lion-orange font-medium">
                     <Gift className="h-4 w-4 mr-1" />
                     <span>0 $HONEY</span>
@@ -172,7 +172,7 @@ export default function LiffPage() {
             <p className="text-xs text-gray-500 text-center">0/5 位好友</p>
 
             <p className="text-sm text-gray-600 text-center">
-              邀請朋友加入 ZOO3，當他們使用您的推薦連結註冊時，您們雙方都將獲得 10 $HONEY 獎勵！
+              邀請朋友加入 BitBee，當他們使用您的推薦連結註冊時，您們雙方都將獲得 10 $HONEY 獎勵！
             </p>
 
             <div className="flex gap-2">
