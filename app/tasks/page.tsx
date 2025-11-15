@@ -3,7 +3,7 @@
 import type React from "react"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Share2, MessageSquare, ChevronDown, ChevronUp, Check, ExternalLink } from "lucide-react"
+import { Share2, MessageSquare, ChevronDown, ChevronUp, Check, ExternalLink } from 'lucide-react'
 import { BottomNavigation } from "@/components/bottom-navigation"
 import { LionLogo } from "@/components/lion-logo"
 import { toast } from "@/components/ui/use-toast"
@@ -12,6 +12,7 @@ export default function TasksPage() {
   const [completedTasks, setCompletedTasks] = useState<string[]>([])
   const [referralLink, setReferralLink] = useState("")
   const [discordVerifying, setDiscordVerifying] = useState(false)
+  const [telegramVerifying, setTelegramVerifying] = useState(false)
 
   useEffect(() => {
     // Generate referral link - you can customize this logic
@@ -63,6 +64,29 @@ export default function TasksPage() {
     }
   }
 
+  // Simulate Telegram OAuth callback
+  const handleTelegramCallback = async () => {
+    setTelegramVerifying(true)
+
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+
+      completeTask("telegram", "+5 $ZOO")
+
+      toast({
+        title: "Telegram 驗證成功!",
+        description: "您已成功加入社區並完成驗證",
+      })
+    } catch (error) {
+      toast({
+        title: "驗證失敗",
+        description: "請確保您已加入 Telegram 社區",
+      })
+    } finally {
+      setTelegramVerifying(false)
+    }
+  }
+
   return (
     <div className="flex flex-col min-h-screen bg-lion-face-light pb-16">
       {/* Header */}
@@ -90,16 +114,17 @@ export default function TasksPage() {
             isVerifying={discordVerifying}
           />
 
-          {/* Social Media Sharing */}
+          {/* Telegram Task */}
           <TaskCard
-            id="social-share"
-            icon={<Share2 className="h-5 w-5 text-white" />}
-            title="社交媒體分享"
-            description="在您的社群媒體上分享"
+            id="telegram"
+            icon={<MessageSquare className="h-5 w-5 text-white" />}
+            title="加入 Telegram 社區"
+            description="加入 ZOO3 官方 Telegram 社區並完成身份驗證"
             reward="+5 $ZOO"
-            isCompleted={completedTasks.includes("social-share")}
-            onComplete={() => completeTask("social-share", "+5 $ZOO")}
-            referralLink={referralLink}
+            isCompleted={completedTasks.includes("telegram")}
+            onComplete={() => completeTask("telegram", "+5 $ZOO")}
+            onTelegramCallback={handleTelegramCallback}
+            isVerifying={telegramVerifying}
           />
         </div>
       </div>
@@ -119,6 +144,7 @@ interface TaskCardProps {
   isCompleted?: boolean
   onComplete: () => void
   onDiscordCallback?: () => void
+  onTelegramCallback?: () => void
   referralLink?: string
   isVerifying?: boolean
 }
@@ -132,6 +158,7 @@ function TaskCard({
   isCompleted = false,
   onComplete,
   onDiscordCallback,
+  onTelegramCallback,
   referralLink = "",
   isVerifying = false,
 }: TaskCardProps) {
@@ -146,15 +173,26 @@ function TaskCard({
 
   // Handle Discord join
   const handleDiscordJoin = (e: React.MouseEvent) => {
-    e.stopPropagation() // Prevent card from collapsing when clicking the button
+    e.stopPropagation()
 
-    // In a real app, this would redirect to Discord OAuth
     window.open("https://discord.gg/zoo3", "_blank")
 
-    // Simulate OAuth callback after 2 seconds (in a real app, this would be handled by the OAuth redirect)
     if (id === "discord" && onDiscordCallback) {
       setTimeout(() => {
         onDiscordCallback()
+      }, 2000)
+    }
+  }
+
+  // Handle Telegram join
+  const handleTelegramJoin = (e: React.MouseEvent) => {
+    e.stopPropagation()
+
+    window.open("https://t.me/twin3_ai", "_blank")
+
+    if (id === "telegram" && onTelegramCallback) {
+      setTimeout(() => {
+        onTelegramCallback()
       }, 2000)
     }
   }
@@ -262,50 +300,65 @@ function TaskCard({
               </div>
             )}
 
-            {id === "social-share" && (
+            {id === "telegram" && (
               <div className="space-y-3">
-                <p className="text-sm text-gray-600">在您的社群媒體上分享 BitBee，幫助我們擴大社區，同時獲得獎勵。</p>
+                <p className="text-sm text-gray-600">完成以下步驟以獲得獎勵：</p>
 
-                {/* Share message preview */}
-                <div className="bg-lion-face-light p-3 rounded-lg border border-lion-face">
-                  <p className="text-xs text-gray-500 mb-1">分享文案：</p>
-                  <p className="text-sm text-gray-700">
-                    🐝 加入 BitBee，完成任務賺取加密貨幣獎勵！ 使用我的推薦連結註冊，我們都能獲得獎勵：
-                    {referralLink}
-                    #BitBee #加密貨幣 #Web3
-                  </p>
+                <div className="space-y-2 bg-lion-face-light p-3 rounded-lg border border-lion-face">
+                  <div className="flex items-start gap-2">
+                    <div className="bg-lion-orange text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
+                      1
+                    </div>
+                    <p className="text-sm text-gray-700">點擊下方按鈕加入 Telegram 社區</p>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <div className="bg-lion-orange text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
+                      2
+                    </div>
+                    <p className="text-sm text-gray-700">在 Telegram 中完成身份驗證</p>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <div className="bg-lion-orange text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
+                      3
+                    </div>
+                    <p className="text-sm text-gray-700">返回此頁面點擊「驗證加入」按鈕</p>
+                  </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
-                  <Button
-                    variant="outline"
-                    className="text-blue-500 border-blue-200 bg-transparent hover:bg-blue-50"
-                    onClick={() => {
-                      const shareText = `🐝 加入 BitBee，完成任務賺取加密貨幣獎勵！
+                <Button
+                  variant="teal"
+                  className="w-full flex items-center justify-center gap-2"
+                  onClick={handleTelegramJoin}
+                >
+                  <ExternalLink className="h-4 w-4" />
+                  加入 Telegram 社區
+                </Button>
 
-使用我的推薦連結註冊，我們都能獲得獎勵：
-${referralLink}
+                <Button
+                  variant="orange"
+                  className="w-full flex items-center justify-center gap-2"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    if (onTelegramCallback) {
+                      onTelegramCallback()
+                    }
+                  }}
+                  disabled={isVerifying}
+                >
+                  {isVerifying ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                      驗證中...
+                    </>
+                  ) : (
+                    <>
+                      <Check className="h-4 w-4" />
+                      驗證加入
+                    </>
+                  )}
+                </Button>
 
-#BitBee #加密貨幣 #Web3`
-                      const url = `https://t.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent(shareText)}`
-                      window.open(url, "_blank", "width=550,height=420")
-                    }}
-                  >
-                    分享到 Telegram
-                  </Button>
-                  <Button
-                    variant="orange"
-                    className="flex items-center justify-center gap-2"
-                    onClick={() => {
-                      onComplete()
-                    }}
-                  >
-                    <Check className="h-4 w-4" />
-                    驗證加入
-                  </Button>
-                </div>
-
-                <p className="text-xs text-gray-500 text-center mt-2">分享後點擊驗證按鈕即可完成任務並獲得獎勵</p>
+                <p className="text-xs text-gray-500 text-center">完成驗證後即可獲得 +5 $ZOO 獎勵</p>
               </div>
             )}
           </div>
