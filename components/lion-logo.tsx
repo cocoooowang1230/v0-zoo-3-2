@@ -15,13 +15,13 @@ export function LionLogo({ variant = "orange", size = "md", className = "" }: Li
   }
 
   const { width, height } = sizes[size]
-  const src = variant === "orange" ? "/images/lion-logo.png" : "/images/lion-logo-teal.png"
+  const src = "/images/bitbee-logo.png"
 
   return (
     <div className={`relative ${className}`}>
       <Image
         src={src || "/placeholder.svg"}
-        alt="Lion Logo"
+        alt="BitBee Logo"
         width={width}
         height={height}
         className="animate-bounce-subtle"
