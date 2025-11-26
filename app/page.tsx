@@ -188,34 +188,29 @@ export default function Home() {
         </Card>
 
         {/* LINE Wallet Connection Card */}
-        <Card className="p-6 rounded-xl bg-white border-2 border-lion-orange/20 shadow-lion overflow-hidden">
-          <div className="flex flex-col items-center space-y-4">
-            <div className="w-16 h-16 flex items-center justify-center">
-              <Image
-                src="/images/line-wallet-icon.png"
-                alt="LINE Wallet"
-                width={64}
-                height={64}
-                className="object-contain"
-              />
-            </div>
-            <div className="text-center">
-              <h2 className="text-lg font-bold flex items-center justify-center gap-1 text-lion-accent">
-                <span className="text-sm">🐾</span> 連接 LINE 錢包
-              </h2>
-              <p className="text-sm text-gray-600 mt-1">連接您的 LINE 錢包以查看您的代幣並參與任務</p>
-            </div>
-
-            {isWalletConnected ? (
-              <div className="w-full text-center bg-gray-50 p-3 rounded-lg border border-gray-200">
-                <p className="text-green-600 font-medium">已連接</p>
-                <p className="text-sm text-gray-600 mt-1">LINE 錢包已成功連接</p>
+        {!isWalletConnected && (
+          <Card className="p-6 rounded-xl bg-white border-2 border-lion-orange/20 shadow-lion overflow-hidden">
+            <div className="flex flex-col items-center space-y-4">
+              <div className="w-16 h-16 flex items-center justify-center">
+                <Image
+                  src="/images/line-wallet-icon.png"
+                  alt="LINE Wallet"
+                  width={64}
+                  height={64}
+                  className="object-contain"
+                />
               </div>
-            ) : (
+              <div className="text-center">
+                <h2 className="text-lg font-bold flex items-center justify-center gap-1 text-lion-accent">
+                  <span className="text-sm">🐾</span> 連接 LINE 錢包
+                </h2>
+                <p className="text-sm text-gray-600 mt-1">連接您的 LINE 錢包以查看您的代幣並參與任務</p>
+              </div>
+
               <LineConnectButton onClick={connectWallet} isLoading={isConnecting} isConnected={isWalletConnected} />
-            )}
-          </div>
-        </Card>
+            </div>
+          </Card>
+        )}
 
         {/* Daily Login Challenge Card */}
         <Card className="p-6 rounded-xl bg-white border-2 border-lion-teal/20 shadow-lion-teal overflow-hidden">
