@@ -161,19 +161,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-3">
-            {/* KAIA Token */}
-            <button className="bg-gradient-to-br from-amber-200 to-amber-300 p-4 rounded-2xl flex flex-col items-center gap-2 hover:shadow-md transition-shadow">
-              <div className="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center shadow-sm">
-                <div className="w-6 h-6 rounded-full bg-yellow-400 flex items-center justify-center">
-                  <span className="text-gray-900 font-bold text-xs">Ⓚ</span>
-                </div>
-              </div>
-              <p className="text-xs font-medium text-gray-700">KAIA</p>
-              <p className="text-lg font-bold text-orange-600">x 0</p>
-              <p className="text-xs text-gray-600">點擊查看錢包</p>
-            </button>
-
+          <div className="grid grid-cols-2 gap-3">
             {/* USDT Token */}
             <button className="bg-gradient-to-br from-amber-200 to-amber-300 p-4 rounded-2xl flex flex-col items-center gap-2 hover:shadow-md transition-shadow">
               <div className="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center shadow-sm">
