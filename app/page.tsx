@@ -158,7 +158,7 @@ export default function Home() {
             <h2 className="text-lg font-bold text-lion-accent">王琳瑄Coco的錢包</h2>
             <div className="flex items-center gap-1.5">
               <Image src="/images/honey-icon.png" alt="Honey" width={24} height={24} className="object-contain" />
-              <span className="text-sm font-bold text-amber-700">HONEY x 30</span>
+              <span className="text-lg font-bold text-black">HONEY x 30</span>
             </div>
           </div>
 
