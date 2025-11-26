@@ -104,7 +104,7 @@ export default function LiffPage() {
               <div className="flex items-center justify-center gap-2">
                 <Gift className="h-5 w-5 text-lion-orange" />
                 <span className="font-medium">
-                  今日獎勵: <span className="text-sm font-bold">+0.0000037</span> WBTC
+                  完成七天簽到獎勵: <span className="text-sm font-bold">+0.0000037</span> WBTC
                 </span>
               </div>
             </div>
