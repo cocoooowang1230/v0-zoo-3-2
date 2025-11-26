@@ -154,11 +154,11 @@ export default function Home() {
       <main className="flex-1 container max-w-md mx-auto p-4 space-y-4">
         {/* Token Balance Display Section */}
         <Card className="p-4 rounded-xl bg-white border-2 border-lion-orange/20 shadow-lion">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-bold text-lion-accent">王琳瑄Coco的錢包</h2>
-            <div className="flex items-center gap-1.5">
-              <Image src="/images/honey-icon.png" alt="Honey" width={24} height={24} className="object-contain" />
-              <span className="text-lg font-light text-black">HONEY x 30</span>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-bold text-lion-accent">王琳瑄Coco的錢包</h2>
+            <div className="flex items-center gap-2">
+              <Image src="/images/honey-icon.png" alt="Honey" width={28} height={28} className="object-contain" />
+              <span className="text-xl font-light text-black">HONEY x 30</span>
             </div>
           </div>
 
