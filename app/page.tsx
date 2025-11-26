@@ -165,8 +165,8 @@ export default function Home() {
           <div className="grid grid-cols-2 gap-3">
             <div className="bg-lion-face p-3 rounded-lg text-center border border-lion-face-dark">
               <div className="flex items-center justify-center mb-1">
-                <div className="w-8 h-8 rounded-full overflow-hidden">
-                  <Image src="/images/usdt-token.jpg" alt="USDT Token" width={32} height={32} />
+                <div className="w-8 h-8 flex items-center justify-center">
+                  <Image src="/images/usdt-icon.svg" alt="USDT Token" width={32} height={32} />
                 </div>
                 <p className="text-sm font-medium text-gray-600 ml-1">USDT</p>
               </div>
