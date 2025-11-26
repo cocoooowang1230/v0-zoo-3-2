@@ -245,7 +245,7 @@ export default function Home() {
                               : "bg-gradient-to-br from-lion-orange-light to-lion-red-light opacity-70"
                       }`}
                   >
-                    {index + 1}
+                    {index === 6 ? "🎁" : index + 1}
                   </div>
                 </div>
               ))}

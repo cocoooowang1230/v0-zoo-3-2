@@ -130,11 +130,8 @@ export default function LiffPage() {
                           : "bg-gradient-to-br from-lion-orange-light to-lion-red-light opacity-70"
                     }`}
                   >
-                    {item.day}
+                    {item.special ? "🎁" : item.day}
                   </div>
-                  <span className={`text-xs mt-1 ${item.special ? "text-lion-teal font-medium" : ""}`}>
-                    {item.reward}
-                  </span>
                 </div>
               ))}
             </div>
