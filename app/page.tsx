@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Progress } from "@/components/ui/progress"
-import { Gift, Copy, Users, Check } from "lucide-react"
+import { Gift, Copy, Users, Check, Hexagon } from "lucide-react"
 import { toast } from "@/components/ui/use-toast"
 import { BottomNavigation } from "@/components/bottom-navigation"
 import { LionLogo } from "@/components/lion-logo"
@@ -152,33 +152,47 @@ export default function Home() {
       </header>
 
       <main className="flex-1 container max-w-md mx-auto p-4 space-y-4">
-        {/* Token Balance Display Card */}
-        <Card className="p-6 rounded-xl bg-white border-2 border-lion-orange/20 shadow-lion overflow-hidden">
-          <h2 className="text-lg font-bold mb-4 text-lion-accent">您的代幣</h2>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="bg-gradient-to-br from-lion-face to-lion-face-light p-4 rounded-xl text-center border-2 border-lion-face-dark shadow-sm">
-              <div className="flex items-center justify-center mb-2">
-                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-md">
-                  <div className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center">
-                    <span className="text-white font-bold text-lg">₮</span>
-                  </div>
-                </div>
-              </div>
-              <p className="text-sm font-medium text-gray-600 mb-1">USDT</p>
-              <p className="text-2xl font-bold text-lion-teal">x 0</p>
+        <Card className="p-5 rounded-2xl bg-white shadow-md">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-base font-semibold text-gray-800">王琳瑄Coco的錢包</h2>
+            <div className="flex items-center gap-1.5">
+              <Hexagon className="h-5 w-5 text-amber-500 fill-amber-500" />
+              <span className="font-semibold text-gray-800">HONEY x 30</span>
             </div>
+          </div>
 
-            <div className="bg-gradient-to-br from-lion-face to-lion-face-light p-4 rounded-xl text-center border-2 border-lion-face-dark shadow-sm">
-              <div className="flex items-center justify-center mb-2">
-                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-md">
-                  <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center">
-                    <span className="text-white font-bold text-lg">₿</span>
-                  </div>
+          <div className="grid grid-cols-3 gap-3">
+            {/* KAIA Token */}
+            <button className="bg-gradient-to-br from-amber-200 to-amber-300 p-4 rounded-2xl flex flex-col items-center gap-2 hover:shadow-md transition-shadow">
+              <div className="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center shadow-sm">
+                <div className="w-6 h-6 rounded-full bg-yellow-400 flex items-center justify-center">
+                  <span className="text-gray-900 font-bold text-xs">Ⓚ</span>
                 </div>
               </div>
-              <p className="text-sm font-medium text-gray-600 mb-1">WBTC</p>
-              <p className="text-2xl font-bold text-orange-500">x 0</p>
-            </div>
+              <p className="text-xs font-medium text-gray-700">KAIA</p>
+              <p className="text-lg font-bold text-orange-600">x 0</p>
+              <p className="text-xs text-gray-600">點擊查看錢包</p>
+            </button>
+
+            {/* USDT Token */}
+            <button className="bg-gradient-to-br from-amber-200 to-amber-300 p-4 rounded-2xl flex flex-col items-center gap-2 hover:shadow-md transition-shadow">
+              <div className="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center shadow-sm">
+                <span className="text-white font-bold text-sm">₮</span>
+              </div>
+              <p className="text-xs font-medium text-gray-700">USDT</p>
+              <p className="text-lg font-bold text-orange-600">x 0</p>
+              <p className="text-xs text-gray-600">點擊查看錢包</p>
+            </button>
+
+            {/* WBTC Token */}
+            <button className="bg-gradient-to-br from-amber-200 to-amber-300 p-4 rounded-2xl flex flex-col items-center gap-2 hover:shadow-md transition-shadow">
+              <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center shadow-sm">
+                <span className="text-white font-bold text-sm">₿</span>
+              </div>
+              <p className="text-xs font-medium text-gray-700">WBTC</p>
+              <p className="text-lg font-bold text-orange-600">x 0</p>
+              <p className="text-xs text-gray-600">點擊查看錢包</p>
+            </button>
           </div>
         </Card>
 
