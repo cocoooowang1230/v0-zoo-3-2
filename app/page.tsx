@@ -156,16 +156,11 @@ export default function Home() {
         <Card className="p-4 rounded-xl bg-white border-2 border-lion-orange/20 shadow-lion">
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-lg font-bold text-lion-accent">王琳瑄Coco的錢包</h2>
-            <div className="flex items-center gap-1.5 bg-amber-100 px-3 py-1.5 rounded-full border border-amber-300">
-              <div className="w-5 h-5 bg-amber-400 rounded-sm flex items-center justify-center">
-                <svg viewBox="0 0 24 24" fill="none" className="w-3 h-3">
-                  <path d="M12 2L14 8L20 10L14 12L12 18L10 12L4 10L10 8L12 2Z" fill="white" />
-                </svg>
-              </div>
+            <div className="flex items-center gap-1.5">
+              <Image src="/images/honey-icon.png" alt="Honey" width={24} height={24} className="object-contain" />
               <span className="text-sm font-bold text-amber-700">HONEY x 30</span>
             </div>
           </div>
-          {/* </CHANGE> */}
 
           <div className="grid grid-cols-3 gap-3">
             <div className="bg-lion-face p-3 rounded-lg text-center border border-lion-face-dark">
