@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { BottomNavigation } from "@/components/bottom-navigation"
 import { LionLogo } from "@/components/lion-logo"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 export default function RewardsPage() {
   // Sample reward history data
@@ -98,6 +98,41 @@ export default function RewardsPage() {
       </header>
 
       <main className="flex-1 container max-w-md mx-auto p-4 space-y-4">
+        <Card className="p-4 rounded-xl bg-white border-2 border-lion-orange/20 shadow-lion">
+          <h2 className="text-lg font-bold mb-3 text-lion-accent">您的代幣</h2>
+          <div className="grid grid-cols-3 gap-3">
+            <div className="bg-lion-face p-3 rounded-lg text-center border border-lion-face-dark">
+              <div className="flex items-center justify-center mb-1">
+                <div className="w-8 h-8 rounded-full overflow-hidden">
+                  <Image src="/images/kaia-token.png" alt="KAIA Token" width={32} height={32} />
+                </div>
+                <p className="text-sm font-medium text-gray-600 ml-1">KAIA</p>
+              </div>
+              <p className="text-xl font-bold text-lion-orange">x 12</p>
+            </div>
+
+            <div className="bg-lion-face p-3 rounded-lg text-center border border-lion-face-dark">
+              <div className="flex items-center justify-center mb-1">
+                <div className="w-8 h-8 rounded-full overflow-hidden">
+                  <Image src="/images/zoo-token.png" alt="ZOO Token" width={32} height={32} />
+                </div>
+                <p className="text-sm font-medium text-gray-600 ml-1">ZOO</p>
+              </div>
+              <p className="text-xl font-bold text-lion-teal">x 35</p>
+            </div>
+
+            <div className="bg-lion-face p-3 rounded-lg text-center border border-lion-face-dark">
+              <div className="flex items-center justify-center mb-1">
+                <div className="w-8 h-8 rounded-full overflow-hidden">
+                  <Image src="/images/wbtc-token.png" alt="WBTC Token" width={32} height={32} />
+                </div>
+                <p className="text-sm font-medium text-gray-600 ml-1">WBTC</p>
+              </div>
+              <p className="text-xl font-bold text-orange-500">x 0.0001</p>
+            </div>
+          </div>
+        </Card>
+
         <Card className="p-4 rounded-xl bg-white border-2 border-lion-teal/20 shadow-lion-teal">
           <div className="flex justify-between items-center mb-3">
             <h2 className="text-lg font-bold text-lion-accent">獎勵歷史</h2>
@@ -138,7 +173,7 @@ export default function RewardsPage() {
               size="sm"
               onClick={goToPreviousPage}
               disabled={currentPage === 1}
-              className="flex items-center gap-1 bg-transparent"
+              className="flex items-center gap-1"
             >
               <ChevronLeft className="h-4 w-4" />
               上一頁
@@ -153,7 +188,7 @@ export default function RewardsPage() {
               size="sm"
               onClick={goToNextPage}
               disabled={currentPage === totalPages}
-              className="flex items-center gap-1 bg-transparent"
+              className="flex items-center gap-1"
             >
               下一頁
               <ChevronRight className="h-4 w-4" />
