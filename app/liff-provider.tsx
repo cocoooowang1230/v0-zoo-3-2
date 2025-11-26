@@ -41,12 +41,22 @@ export function LiffProvider({ children, liffId }: LiffProviderProps) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    let isMounted = true
+
     const initialize = async () => {
+      if (!isMounted) return
+
       try {
         setLoading(true)
         console.log("[v0] Starting LIFF initialization...")
 
-        const initialized = await initializeLiff(liffId)
+        const initialized = await initializeLiff(liffId).catch((err) => {
+          console.log("[v0] initializeLiff promise rejected:", err)
+          return false
+        })
+
+        if (!isMounted) return
+
         console.log("[v0] LIFF initialization result:", initialized)
         setIsInitialized(initialized)
 
@@ -62,9 +72,11 @@ export function LiffProvider({ children, liffId }: LiffProviderProps) {
 
             // Get user profile if logged in
             if (loggedIn) {
-              const userProfile = await getUserProfile()
-              setProfile(userProfile)
-              console.log("[v0] User profile loaded")
+              const userProfile = await getUserProfile().catch(() => null)
+              if (isMounted) {
+                setProfile(userProfile)
+                console.log("[v0] User profile loaded")
+              }
             }
           } catch (liffError) {
             console.log("[v0] Error accessing LIFF methods:", liffError)
@@ -76,19 +88,37 @@ export function LiffProvider({ children, liffId }: LiffProviderProps) {
       } catch (err) {
         console.log("[v0] LIFF initialization error (non-critical):", err)
         // Only set error for critical failures, not for missing LIFF SDK
-        if (err instanceof Error && !err.message.includes("Cannot find module")) {
+        if (isMounted && err instanceof Error && !err.message.includes("Cannot find module")) {
           setError(err)
         }
       } finally {
-        setLoading(false)
-        console.log("[v0] LIFF initialization complete")
+        if (isMounted) {
+          setLoading(false)
+          console.log("[v0] LIFF initialization complete")
+        }
       }
     }
 
+    // Add global unhandledrejection handler
+    const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
+      console.log("[v0] Caught unhandled promise rejection:", event.reason)
+      // Prevent the error from crashing the app
+      event.preventDefault()
+    }
+
+    window.addEventListener("unhandledrejection", handleUnhandledRejection)
+
     initialize().catch((err) => {
       console.log("[v0] Caught unhandled error in LIFF initialization:", err)
-      setLoading(false)
+      if (isMounted) {
+        setLoading(false)
+      }
     })
+
+    return () => {
+      isMounted = false
+      window.removeEventListener("unhandledrejection", handleUnhandledRejection)
+    }
   }, [liffId])
 
   const value = {

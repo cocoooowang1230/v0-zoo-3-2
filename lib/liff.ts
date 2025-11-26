@@ -54,24 +54,37 @@ export async function initializeLiff(liffId: string): Promise<boolean> {
 
     if (!window.liff) {
       try {
-        await import("@line/liff")
+        const liffModule = await import("@line/liff")
         console.log("[v0] LIFF SDK loaded successfully")
-      } catch (importError) {
-        console.log("[v0] LIFF SDK not available, this is expected in preview environment")
+        // Ensure the module is properly loaded
+        if (!window.liff) {
+          console.log("[v0] LIFF SDK loaded but not available on window object")
+          return false
+        }
+      } catch (importError: any) {
+        console.log(
+          "[v0] LIFF SDK not available - this is expected in preview environment:",
+          importError?.message || importError,
+        )
         // Return false gracefully instead of throwing error
         return false
       }
     }
 
     if (window.liff) {
-      await window.liff.init({ liffId })
-      console.log("[v0] LIFF initialized successfully")
-      return true
+      try {
+        await window.liff.init({ liffId })
+        console.log("[v0] LIFF initialized successfully")
+        return true
+      } catch (initError: any) {
+        console.log("[v0] LIFF init failed:", initError?.message || initError)
+        return false
+      }
     }
 
     return false
-  } catch (error) {
-    console.log("[v0] LIFF initialization skipped:", error)
+  } catch (error: any) {
+    console.log("[v0] LIFF initialization skipped:", error?.message || error)
     // Return false instead of throwing to prevent app crashes
     return false
   }
