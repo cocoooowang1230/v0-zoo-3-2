@@ -47,23 +47,32 @@ declare global {
 // Initialize LIFF
 export async function initializeLiff(liffId: string): Promise<boolean> {
   try {
-    // Check if we're in a browser environment
     if (typeof window === "undefined") {
+      console.log("[v0] Not in browser environment, skipping LIFF init")
       return false
     }
 
-    // Check if LIFF is already loaded
     if (!window.liff) {
-      // Load LIFF SDK dynamically
-      await import("@line/liff")
+      try {
+        await import("@line/liff")
+        console.log("[v0] LIFF SDK loaded successfully")
+      } catch (importError) {
+        console.log("[v0] LIFF SDK not available, this is expected in preview environment")
+        // Return false gracefully instead of throwing error
+        return false
+      }
     }
 
-    // Initialize LIFF
-    await window.liff.init({ liffId })
-    console.log("LIFF initialized successfully")
-    return true
+    if (window.liff) {
+      await window.liff.init({ liffId })
+      console.log("[v0] LIFF initialized successfully")
+      return true
+    }
+
+    return false
   } catch (error) {
-    console.error("Failed to initialize LIFF:", error)
+    console.log("[v0] LIFF initialization skipped:", error)
+    // Return false instead of throwing to prevent app crashes
     return false
   }
 }
