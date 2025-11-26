@@ -181,7 +181,7 @@ export default function Home() {
                 </div>
                 <p className="text-sm font-medium text-gray-600 ml-1">WBTC</p>
               </div>
-              <p className="text-xl font-bold text-orange-500">x 0</p>
+              <p className="text-xl font-bold text-orange-500">x 0.0000037</p>
               <p className="text-xs text-gray-500 mt-1">點擊查看錢包</p>
             </div>
           </div>
