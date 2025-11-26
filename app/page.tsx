@@ -82,7 +82,7 @@ export default function Home() {
     newStreak.days[currentDay].completed = true
 
     // Add reward
-    const rewardAmount = Number.parseInt(newStreak.days[currentDay].reward.match(/\d+/)[0])
+    const rewardAmount = Number.parseFloat(newStreak.days[currentDay].reward.match(/\d+(\.\d+)?/)[0])
     const newTotalRewards = totalRewards + rewardAmount
     setTotalRewards(newTotalRewards)
 
@@ -103,7 +103,7 @@ export default function Home() {
     // Show toast notification
     toast({
       title: "獎勵已領取!",
-      description: `您獲得了 +${rewardAmount} $KAIA`,
+      description: `您獲得了 +${rewardAmount} WBTC`,
     })
   }
 
@@ -223,7 +223,7 @@ export default function Home() {
             <div className="bg-lion-face rounded-lg p-3 text-center border border-lion-face-dark">
               <div className="flex items-center justify-center gap-2">
                 <Gift className="h-5 w-5 text-lion-orange" />
-                <span className="font-medium">今日獎勵: +1 $KAIA</span>
+                <span className="font-medium">今日獎勵: +0.0000037 WBTC</span>
               </div>
             </div>
 

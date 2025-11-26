@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Progress } from "@/components/ui/progress"
-import { Gift, Copy, Users } from 'lucide-react'
+import { Gift, Copy, Users } from "lucide-react"
 import { useLiff } from "./liff-provider"
 import { toast } from "@/components/ui/use-toast"
 import { LineConnectButton } from "@/components/line-connect-button"
@@ -39,7 +39,7 @@ export default function LiffPage() {
     setDailyRewardClaimed(true)
     toast({
       title: "Reward claimed!",
-      description: "You've received +1 $KAIA",
+      description: "You've received +0.0000037 WBTC",
     })
   }
 
@@ -103,7 +103,7 @@ export default function LiffPage() {
             <div className="bg-lion-face border border-lion-face-dark rounded-lg p-3 text-center">
               <div className="flex items-center justify-center gap-2">
                 <Gift className="h-5 w-5 text-lion-orange" />
-                <span className="font-medium">今日獎勵: +1 $KAIA</span>
+                <span className="font-medium">今日獎勵: +0.0000037 WBTC</span>
               </div>
             </div>
 
