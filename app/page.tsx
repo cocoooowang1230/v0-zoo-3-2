@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Progress } from "@/components/ui/progress"
-import { Gift, Copy, Users, Check } from 'lucide-react'
+import { Gift, Copy, Users, Check } from "lucide-react"
 import { toast } from "@/components/ui/use-toast"
 import { BottomNavigation } from "@/components/bottom-navigation"
 import { LionLogo } from "@/components/lion-logo"
@@ -152,6 +152,36 @@ export default function Home() {
       </header>
 
       <main className="flex-1 container max-w-md mx-auto p-4 space-y-4">
+        {/* Token Balance Display Card */}
+        <Card className="p-6 rounded-xl bg-white border-2 border-lion-orange/20 shadow-lion overflow-hidden">
+          <h2 className="text-lg font-bold mb-4 text-lion-accent">您的代幣</h2>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="bg-gradient-to-br from-lion-face to-lion-face-light p-4 rounded-xl text-center border-2 border-lion-face-dark shadow-sm">
+              <div className="flex items-center justify-center mb-2">
+                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-md">
+                  <div className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center">
+                    <span className="text-white font-bold text-lg">₮</span>
+                  </div>
+                </div>
+              </div>
+              <p className="text-sm font-medium text-gray-600 mb-1">USDT</p>
+              <p className="text-2xl font-bold text-lion-teal">x 0</p>
+            </div>
+
+            <div className="bg-gradient-to-br from-lion-face to-lion-face-light p-4 rounded-xl text-center border-2 border-lion-face-dark shadow-sm">
+              <div className="flex items-center justify-center mb-2">
+                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-md">
+                  <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center">
+                    <span className="text-white font-bold text-lg">₿</span>
+                  </div>
+                </div>
+              </div>
+              <p className="text-sm font-medium text-gray-600 mb-1">WBTC</p>
+              <p className="text-2xl font-bold text-orange-500">x 0</p>
+            </div>
+          </div>
+        </Card>
+
         {/* LINE Wallet Connection Card */}
         <Card className="p-6 rounded-xl bg-white border-2 border-lion-orange/20 shadow-lion overflow-hidden">
           <div className="flex flex-col items-center space-y-4">
