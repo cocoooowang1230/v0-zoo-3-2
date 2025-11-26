@@ -154,33 +154,23 @@ export default function Home() {
       <main className="flex-1 container max-w-md mx-auto p-4 space-y-4">
         {/* Token Balance Display Section */}
         <Card className="p-4 rounded-xl bg-white border-2 border-lion-orange/20 shadow-lion">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold text-lion-accent">王琳瑄Coco的錢包</h2>
-            <div className="flex items-center gap-2">
-              <Image src="/images/honey-icon.png" alt="Honey" width={28} height={28} className="object-contain" />
-              <span className="text-xl font-light text-black">HONEY x 30</span>
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-lg font-bold text-lion-accent">王琳瑄Coco的錢包</h2>
+            <div className="flex items-center gap-1.5">
+              <Image src="/images/honey-icon.png" alt="Honey" width={24} height={24} className="object-contain" />
+              <span className="text-lg font-bold text-black">HONEY x 30</span>
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 gap-3">
             <div className="bg-lion-face p-3 rounded-lg text-center border border-lion-face-dark">
               <div className="flex items-center justify-center mb-1">
                 <div className="w-8 h-8 rounded-full overflow-hidden">
-                  <Image src="/images/kaia-token.png" alt="KAIA Token" width={32} height={32} />
+                  <Image src="/images/usdt-token.jpg" alt="USDT Token" width={32} height={32} />
                 </div>
-                <p className="text-sm font-medium text-gray-600 ml-1">KAIA</p>
+                <p className="text-sm font-medium text-gray-600 ml-1">USDT</p>
               </div>
-              <p className="text-xl font-bold text-lion-orange">x 12</p>
-            </div>
-
-            <div className="bg-lion-face p-3 rounded-lg text-center border border-lion-face-dark">
-              <div className="flex items-center justify-center mb-1">
-                <div className="w-8 h-8 rounded-full overflow-hidden">
-                  <Image src="/images/bitbee-logo.png" alt="HONEY Token" width={32} height={32} />
-                </div>
-                <p className="text-sm font-medium text-gray-600 ml-1">HONEY</p>
-              </div>
-              <p className="text-xl font-bold text-lion-teal">x 35</p>
+              <p className="text-xl font-bold text-green-600">x 0</p>
             </div>
 
             <div className="bg-lion-face p-3 rounded-lg text-center border border-lion-face-dark">
@@ -190,7 +180,7 @@ export default function Home() {
                 </div>
                 <p className="text-sm font-medium text-gray-600 ml-1">WBTC</p>
               </div>
-              <p className="text-xl font-bold text-orange-500">x 0.0001</p>
+              <p className="text-xl font-bold text-orange-500">x 0</p>
             </div>
           </div>
         </Card>
