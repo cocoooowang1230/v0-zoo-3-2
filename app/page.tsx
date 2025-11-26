@@ -247,9 +247,6 @@ export default function Home() {
                   >
                     {index + 1}
                   </div>
-                  <span className={`text-xs mt-1 ${index === 6 ? "text-lion-teal font-medium" : ""}`}>
-                    {day.reward}
-                  </span>
                 </div>
               ))}
             </div>
