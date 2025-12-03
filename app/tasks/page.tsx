@@ -152,15 +152,17 @@ export default function TasksPage() {
       <BottomNavigation activeTab="tasks" />
 
       <AlertDialog open={showPrerequisiteDialog} onOpenChange={setShowPrerequisiteDialog}>
-        <AlertDialogContent className="max-w-sm">
+        <AlertDialogContent className="max-w-sm bg-white">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-lion-accent">請先完成首要任務</AlertDialogTitle>
-            <AlertDialogDescription className="text-gray-600">
+            <AlertDialogTitle className="text-xl font-bold text-gray-900">請先完成首要任務</AlertDialogTitle>
+            <AlertDialogDescription className="text-base text-gray-700">
               您需要先完成身分驗證才能進行其他任務
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogAction className="bg-lion-orange hover:bg-lion-red">確定</AlertDialogAction>
+            <AlertDialogAction className="bg-lion-orange hover:bg-lion-red text-white font-semibold">
+              確定
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
