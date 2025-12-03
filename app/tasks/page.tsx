@@ -176,15 +176,6 @@ function TaskCard({
 
   // Toggle expanded state
   const toggleExpand = () => {
-    if (id === "discord" && !completedTasks.includes("identity")) {
-      toast({
-        title: "請先完成首要任務",
-        description: "您需要先完成身分驗證才能進行其他任務",
-        variant: "destructive",
-      })
-      return
-    }
-
     if (!isCompleted) {
       setIsExpanded(!isExpanded)
     }
@@ -280,12 +271,6 @@ function TaskCard({
                     <div className="bg-lion-orange text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
                       2
                     </div>
-                    <p className="text-sm text-gray-700">在網頁中完成身份驗證</p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <div className="bg-lion-orange text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
-                      3
-                    </div>
                     <p className="text-sm text-gray-700">返回此頁面點擊「驗證完成」按鈕</p>
                   </div>
                 </div>
@@ -344,12 +329,6 @@ function TaskCard({
                   <div className="flex items-start gap-2">
                     <div className="bg-lion-orange text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
                       2
-                    </div>
-                    <p className="text-sm text-gray-700">在 Discord 中完成身份驗證</p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <div className="bg-lion-orange text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
-                      3
                     </div>
                     <p className="text-sm text-gray-700">返回此頁面點擊「驗證加入」按鈕</p>
                   </div>
