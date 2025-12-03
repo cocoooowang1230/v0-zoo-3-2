@@ -176,6 +176,15 @@ function TaskCard({
 
   // Toggle expanded state
   const toggleExpand = () => {
+    if (id === "discord" && !completedTasks.includes("identity")) {
+      toast({
+        title: "請先完成首要任務",
+        description: "您需要先完成身分驗證才能進行其他任務",
+        variant: "destructive",
+      })
+      return
+    }
+
     if (!isCompleted) {
       setIsExpanded(!isExpanded)
     }
