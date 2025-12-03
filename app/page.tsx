@@ -155,6 +155,34 @@ export default function Home() {
     }
   }
 
+  // Function to share referral link
+  const shareReferralLink = async () => {
+    const shareData = {
+      title: "加入 BitBee",
+      text: "使用我的邀請連結加入 BitBee，一起獲得獎勵！",
+      url: referralLink,
+    }
+
+    try {
+      // Check if Web Share API is supported
+      if (navigator.share) {
+        await navigator.share(shareData)
+        toast({
+          title: "分享成功!",
+          description: "感謝您分享 BitBee",
+        })
+      } else {
+        // Fallback: copy to clipboard if share is not supported
+        await copyReferralLink()
+      }
+    } catch (err) {
+      // User cancelled share or error occurred
+      if (err.name !== "AbortError") {
+        console.error("Share failed:", err)
+      }
+    }
+  }
+
   // Function to connect wallet
   const connectWallet = () => {
     setIsConnecting(true)
@@ -362,6 +390,31 @@ export default function Home() {
                   複製邀請連結
                 </>
               )}
+            </Button>
+
+            <Button
+              variant="outline"
+              className="w-full flex items-center justify-center gap-2 border-lion-orange text-lion-orange hover:bg-lion-orange/10 bg-transparent"
+              onClick={shareReferralLink}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="18" cy="5" r="3" />
+                <circle cx="6" cy="12" r="3" />
+                <circle cx="18" cy="19" r="3" />
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+              </svg>
+              分享
             </Button>
           </div>
         </Card>
