@@ -27,6 +27,8 @@ export default function TasksPage() {
     }
   }, [])
 
+  const isIdentityCompleted = () => completedTasks.includes("identity")
+
   // Function to mark a task as completed
   const completeTask = (taskId: string, reward: string) => {
     if (!completedTasks.includes(taskId)) {
@@ -41,6 +43,15 @@ export default function TasksPage() {
 
   // Simulate Discord OAuth callback
   const handleDiscordCallback = async () => {
+    if (!isIdentityCompleted()) {
+      toast({
+        title: "請先完成首要任務",
+        description: "您需要先完成身分驗證後才可進行其他任務",
+        variant: "destructive",
+      })
+      return
+    }
+
     setDiscordVerifying(true)
 
     try {
@@ -123,6 +134,7 @@ export default function TasksPage() {
             onComplete={() => completeTask("discord", "+5 $HONEY")}
             onDiscordCallback={handleDiscordCallback}
             isVerifying={discordVerifying}
+            isDisabled={!isIdentityCompleted()}
           />
         </div>
       </div>
@@ -145,6 +157,7 @@ interface TaskCardProps {
   onIdentityCallback?: () => void
   referralLink?: string
   isVerifying?: boolean
+  isDisabled?: boolean
 }
 
 function TaskCard({
@@ -159,12 +172,13 @@ function TaskCard({
   onIdentityCallback,
   referralLink = "",
   isVerifying = false,
+  isDisabled = false,
 }: TaskCardProps) {
   const [isExpanded, setIsExpanded] = useState(false)
 
   // Toggle expanded state
   const toggleExpand = () => {
-    if (!isCompleted) {
+    if (!isCompleted && !isDisabled) {
       setIsExpanded(!isExpanded)
     }
   }
@@ -200,15 +214,17 @@ function TaskCard({
         ${
           isCompleted
             ? "border-green-300 bg-green-50"
-            : isExpanded
-              ? "border-lion-orange shadow-lion"
-              : "border-lion-face-dark shadow-sm hover:shadow-lion"
+            : isDisabled
+              ? "border-gray-200 bg-gray-50 opacity-60"
+              : isExpanded
+                ? "border-lion-orange shadow-lion"
+                : "border-lion-face-dark shadow-sm hover:shadow-lion"
         }`}
     >
       <div className="flex items-start p-4 cursor-pointer" onClick={toggleExpand}>
         <div
           className={`p-3 rounded-full mr-3 shadow-sm ${
-            isCompleted ? "bg-green-500" : "bg-gradient-to-br from-lion-orange to-lion-red"
+            isCompleted ? "bg-green-500" : isDisabled ? "bg-gray-400" : "bg-gradient-to-br from-lion-orange to-lion-red"
           }`}
         >
           {isCompleted ? <Check className="h-5 w-5 text-white" /> : icon}
@@ -217,13 +233,14 @@ function TaskCard({
         <div className="flex-1">
           <h3 className="font-bold text-lion-accent">{title}</h3>
           <p className="text-sm text-gray-600">{description}</p>
+          {isDisabled && !isCompleted && <p className="text-xs text-red-500 mt-1">🔒 請先完成首要任務</p>}
         </div>
 
         <div className="flex flex-col items-end">
           <div className="bg-lion-face px-3 py-1 rounded-full text-lion-orange font-medium text-sm border border-lion-face-dark mb-1">
             {reward}
           </div>
-          {!isCompleted && (
+          {!isCompleted && !isDisabled && (
             <div className="text-gray-400">
               {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
             </div>
@@ -232,7 +249,7 @@ function TaskCard({
       </div>
 
       {/* Expanded content */}
-      {isExpanded && !isCompleted && (
+      {isExpanded && !isCompleted && !isDisabled && (
         <div className="px-4 pb-4 pt-0">
           <div className="border-t border-gray-100 pt-3">
             {id === "identity" && (
@@ -371,7 +388,7 @@ function TaskCard({
           <div className="border-t border-green-100 pt-3">
             <p className="text-sm text-green-600 flex items-center">
               <Check className="h-4 w-4 mr-1" />
-              任務已完成！獎勵已發放到您的帳戶
+              任務已完成！
             </p>
           </div>
         </div>
