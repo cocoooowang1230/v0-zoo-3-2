@@ -251,10 +251,11 @@ export default function Home() {
               <span className="text-sm">🐾</span> 每日連續登入挑戰
             </h2>
 
-            <div className="bg-gradient-to-r from-amber-100 to-orange-100 border-2 border-orange-300 rounded-xl p-4 flex items-center justify-center gap-2">
-              <Gift className="h-5 w-5 text-orange-600" />
-              <span className="font-bold text-gray-800">完成七天簽到獎勵：</span>
-              <span className="font-bold text-orange-600">+0.0000037 WBTC</span>
+            <div className="bg-gradient-to-r from-orange-100 to-orange-50 rounded-lg p-3 flex items-center justify-center gap-2 border border-orange-200">
+              <Gift className="h-5 w-5 text-lion-orange" />
+              <span className="text-sm font-semibold text-gray-800">
+                完成七天簽到獎勵：<span className="text-lion-orange">+0.0000037 WBTC</span>
+              </span>
             </div>
 
             {/* Day Progress */}
@@ -279,10 +280,10 @@ export default function Home() {
               ))}
             </div>
 
-            <p className="text-center text-sm font-medium text-lion-orange">
+            <p className="text-center text-sm text-lion-orange">
               {loginStreak.currentDay === 6 && loginStreak.days[6].completed
                 ? "恭喜完成連續登入挑戰！"
-                : `連續登入: ${loginStreak.currentDay}/7 天`}
+                : `連續登入: ${loginStreak.currentDay + 1}/7 天`}
             </p>
 
             <Button
