@@ -3,26 +3,16 @@
 import type React from "react"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { MessageSquare, ChevronDown, ChevronUp, Check, ExternalLink, ShieldCheck, Lock } from "lucide-react"
+import { MessageSquare, ChevronDown, ChevronUp, Check, ExternalLink, ShieldCheck } from "lucide-react"
 import { BottomNavigation } from "@/components/bottom-navigation"
 import { LionLogo } from "@/components/lion-logo"
 import { toast } from "@/components/ui/use-toast"
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
 
 export default function TasksPage() {
   const [completedTasks, setCompletedTasks] = useState<string[]>([])
   const [referralLink, setReferralLink] = useState("")
   const [discordVerifying, setDiscordVerifying] = useState(false)
   const [identityVerifying, setIdentityVerifying] = useState(false)
-  const [showLockedDialog, setShowLockedDialog] = useState(false)
 
   useEffect(() => {
     // Generate referral link - you can customize this logic
@@ -36,8 +26,6 @@ export default function TasksPage() {
       localStorage.setItem("referralLink", newLink)
     }
   }, [])
-
-  const isIdentityCompleted = () => completedTasks.includes("identity")
 
   // Function to mark a task as completed
   const completeTask = (taskId: string, reward: string) => {
@@ -53,15 +41,6 @@ export default function TasksPage() {
 
   // Simulate Discord OAuth callback
   const handleDiscordCallback = async () => {
-    if (!isIdentityCompleted()) {
-      toast({
-        title: "請先完成首要任務",
-        description: "您需要先完成身分驗證後才可進行其他任務",
-        variant: "destructive",
-      })
-      return
-    }
-
     setDiscordVerifying(true)
 
     try {
@@ -141,34 +120,16 @@ export default function TasksPage() {
             description="加入 BitBee 官方 Discord 社區並完成身份驗證"
             reward="+5 $HONEY"
             isCompleted={completedTasks.includes("discord")}
+            isPrimaryTaskCompleted={completedTasks.includes("identity")}
             onComplete={() => completeTask("discord", "+5 $HONEY")}
             onDiscordCallback={handleDiscordCallback}
             isVerifying={discordVerifying}
-            isDisabled={!isIdentityCompleted()}
-            onLockedClick={() => setShowLockedDialog(true)}
           />
         </div>
       </div>
 
       {/* Bottom Navigation */}
       <BottomNavigation activeTab="tasks" />
-
-      <AlertDialog open={showLockedDialog} onOpenChange={setShowLockedDialog}>
-        <AlertDialogContent className="max-w-sm">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="flex items-center gap-2 text-lion-orange">
-              <Lock className="h-5 w-5" />
-              請先完成首要任務
-            </AlertDialogTitle>
-            <AlertDialogDescription className="text-base">
-              您需要先完成身分驗證後才可進行其他任務。請先前往完成「首要任務: 完成身分驗證」。
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogAction className="bg-lion-orange hover:bg-lion-red">我知道了</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </div>
   )
 }
@@ -180,13 +141,12 @@ interface TaskCardProps {
   description: string
   reward: string
   isCompleted?: boolean
+  isPrimaryTaskCompleted?: boolean
   onComplete: () => void
   onDiscordCallback?: () => void
   onIdentityCallback?: () => void
   referralLink?: string
   isVerifying?: boolean
-  isDisabled?: boolean
-  onLockedClick?: () => void
 }
 
 function TaskCard({
@@ -196,22 +156,23 @@ function TaskCard({
   description,
   reward,
   isCompleted = false,
+  isPrimaryTaskCompleted = true,
   onComplete,
   onDiscordCallback,
   onIdentityCallback,
   referralLink = "",
   isVerifying = false,
-  isDisabled = false,
-  onLockedClick,
 }: TaskCardProps) {
   const [isExpanded, setIsExpanded] = useState(false)
 
   // Toggle expanded state
   const toggleExpand = () => {
-    if (isDisabled && !isCompleted) {
-      if (onLockedClick) {
-        onLockedClick()
-      }
+    if (id !== "identity" && !isPrimaryTaskCompleted) {
+      toast({
+        title: "提醒",
+        description: "請先完成首要任務後才可進行其他任務",
+        variant: "destructive",
+      })
       return
     }
 
@@ -251,26 +212,19 @@ function TaskCard({
         ${
           isCompleted
             ? "border-green-300 bg-green-50"
-            : isDisabled
-              ? "border-gray-200 cursor-pointer"
-              : isExpanded
-                ? "border-lion-orange shadow-lion"
-                : "border-lion-face-dark shadow-sm hover:shadow-lion"
-        }`}
+            : isExpanded
+              ? "border-lion-orange shadow-lion"
+              : "border-lion-face-dark shadow-sm hover:shadow-lion"
+        }
+        ${id !== "identity" && !isPrimaryTaskCompleted && !isCompleted ? "opacity-60" : ""}`}
     >
       <div className="flex items-start p-4 cursor-pointer" onClick={toggleExpand}>
         <div
           className={`p-3 rounded-full mr-3 shadow-sm ${
-            isCompleted ? "bg-green-500" : isDisabled ? "bg-gray-400" : "bg-gradient-to-br from-lion-orange to-lion-red"
+            isCompleted ? "bg-green-500" : "bg-gradient-to-br from-lion-orange to-lion-red"
           }`}
         >
-          {isCompleted ? (
-            <Check className="h-5 w-5 text-white" />
-          ) : isDisabled ? (
-            <Lock className="h-5 w-5 text-white" />
-          ) : (
-            icon
-          )}
+          {isCompleted ? <Check className="h-5 w-5 text-white" /> : icon}
         </div>
 
         <div className="flex-1">
@@ -282,7 +236,7 @@ function TaskCard({
           <div className="bg-lion-face px-3 py-1 rounded-full text-lion-orange font-medium text-sm border border-lion-face-dark mb-1">
             {reward}
           </div>
-          {!isCompleted && !isDisabled && (
+          {!isCompleted && (
             <div className="text-gray-400">
               {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
             </div>
@@ -291,7 +245,7 @@ function TaskCard({
       </div>
 
       {/* Expanded content */}
-      {isExpanded && !isCompleted && !isDisabled && (
+      {isExpanded && !isCompleted && (
         <div className="px-4 pb-4 pt-0">
           <div className="border-t border-gray-100 pt-3">
             {id === "identity" && (
