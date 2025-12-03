@@ -251,19 +251,18 @@ export default function Home() {
               <span className="text-sm">🐾</span> 每日連續登入挑戰
             </h2>
 
-            <div className="bg-gradient-to-r from-amber-200 to-orange-200 rounded-lg p-3 flex items-center justify-center gap-2">
+            <div className="bg-gradient-to-r from-amber-100 to-orange-100 border-2 border-orange-300 rounded-xl p-4 flex items-center justify-center gap-2">
               <Gift className="h-5 w-5 text-orange-600" />
-              <span className="text-base font-bold text-gray-800">
-                完成七天簽到獎勵：<span className="text-orange-600">+0.0000037 WBTC</span>
-              </span>
+              <span className="font-bold text-gray-800">完成七天簽到獎勵：</span>
+              <span className="font-bold text-orange-600">+0.0000037 WBTC</span>
             </div>
 
-            <div className="relative">
-              <div className="grid grid-cols-7 gap-2">
-                {loginStreak.days.map((day, index) => (
-                  <div key={index} className="flex flex-col items-center">
-                    <div
-                      className={`w-12 h-12 rounded-full flex items-center justify-center text-white font-bold shadow-sm text-lg
+            {/* Day Progress */}
+            <div className="grid grid-cols-7 gap-2 mt-4">
+              {loginStreak.days.map((day, index) => (
+                <div key={index} className="flex flex-col items-center">
+                  <div
+                    className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-medium shadow-sm
                       ${
                         day.completed
                           ? "bg-gradient-to-br from-lion-orange to-lion-red"
@@ -271,20 +270,16 @@ export default function Home() {
                             ? "bg-gradient-to-br from-lion-orange to-lion-red animate-pulse-subtle"
                             : index === 6
                               ? "bg-gradient-to-br from-lion-teal to-lion-teal-dark"
-                              : "bg-gradient-to-br from-orange-300 to-orange-200 opacity-70"
+                              : "bg-gradient-to-br from-lion-orange-light to-lion-red-light opacity-70"
                       }`}
-                    >
-                      {index === 6 ? "7" : index + 1}
-                    </div>
+                  >
+                    {index === 6 ? "🎁" : index + 1}
                   </div>
-                ))}
-              </div>
-              <div className="absolute right-0 top-12 text-xs font-medium text-orange-600 flex items-center gap-0.5">
-                +10 🎁
-              </div>
+                </div>
+              ))}
             </div>
 
-            <p className="text-center text-base font-medium text-lion-orange">
+            <p className="text-center text-sm font-medium text-lion-orange">
               {loginStreak.currentDay === 6 && loginStreak.days[6].completed
                 ? "恭喜完成連續登入挑戰！"
                 : `連續登入: ${loginStreak.currentDay}/7 天`}
@@ -292,7 +287,7 @@ export default function Home() {
 
             <Button
               variant={todaysClaimed ? "teal" : "orange"}
-              className="w-full text-base font-bold"
+              className="w-full"
               onClick={claimDailyReward}
               disabled={todaysClaimed || !isWalletConnected}
             >
