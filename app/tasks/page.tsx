@@ -7,12 +7,22 @@ import { MessageSquare, ChevronDown, ChevronUp, Check, ExternalLink, ShieldCheck
 import { BottomNavigation } from "@/components/bottom-navigation"
 import { LionLogo } from "@/components/lion-logo"
 import { toast } from "@/components/ui/use-toast"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 
 export default function TasksPage() {
   const [completedTasks, setCompletedTasks] = useState<string[]>([])
   const [referralLink, setReferralLink] = useState("")
   const [discordVerifying, setDiscordVerifying] = useState(false)
   const [identityVerifying, setIdentityVerifying] = useState(false)
+  const [showPrerequisiteDialog, setShowPrerequisiteDialog] = useState(false)
 
   useEffect(() => {
     // Generate referral link - you can customize this logic
@@ -133,12 +143,27 @@ export default function TasksPage() {
             onDiscordCallback={handleDiscordCallback}
             isVerifying={discordVerifying}
             completedTasks={completedTasks}
+            onShowPrerequisite={() => setShowPrerequisiteDialog(true)}
           />
         </div>
       </div>
 
       {/* Bottom Navigation */}
       <BottomNavigation activeTab="tasks" />
+
+      <AlertDialog open={showPrerequisiteDialog} onOpenChange={setShowPrerequisiteDialog}>
+        <AlertDialogContent className="max-w-sm">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-lion-accent">請先完成首要任務</AlertDialogTitle>
+            <AlertDialogDescription className="text-gray-600">
+              您需要先完成身分驗證才能進行其他任務
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction className="bg-lion-orange hover:bg-lion-red">確定</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   )
 }
@@ -156,6 +181,7 @@ interface TaskCardProps {
   referralLink?: string
   isVerifying?: boolean
   completedTasks?: string[]
+  onShowPrerequisite?: () => void
 }
 
 function TaskCard({
@@ -171,6 +197,7 @@ function TaskCard({
   referralLink = "",
   isVerifying = false,
   completedTasks = [],
+  onShowPrerequisite,
 }: TaskCardProps) {
   const [isExpanded, setIsExpanded] = useState(false)
 
@@ -185,21 +212,10 @@ function TaskCard({
   const handleDiscordJoin = (e: React.MouseEvent) => {
     e.stopPropagation()
 
-    console.log("[v0] Discord button clicked, completedTasks:", completedTasks)
-    console.log("[v0] Identity completed?", completedTasks.includes("identity"))
-
     if (id === "discord" && !completedTasks.includes("identity")) {
-      console.log("[v0] Showing prerequisite warning")
-
-      // Show browser alert for immediate visibility
-      alert("請先完成首要任務\n\n您需要先完成身分驗證才能進行其他任務")
-
-      // Also show toast notification
-      toast({
-        title: "請先完成首要任務",
-        description: "您需要先完成身分驗證才能進行其他任務",
-        variant: "destructive",
-      })
+      if (onShowPrerequisite) {
+        onShowPrerequisite()
+      }
       return
     }
 
