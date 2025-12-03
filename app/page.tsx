@@ -233,7 +233,6 @@ export default function Home() {
                 <p className="text-sm font-medium text-gray-600 ml-1">USDT</p>
               </div>
               <p className="text-xl font-bold text-green-600">x 0</p>
-              <p className="text-xs text-gray-500 mt-1">點擊查看錢包</p>
             </div>
 
             <div className="bg-lion-face p-3 rounded-lg text-center border border-lion-face-dark">
@@ -244,7 +243,6 @@ export default function Home() {
                 <p className="text-sm font-medium text-gray-600 ml-1">WBTC</p>
               </div>
               <p className="text-xl font-bold text-orange-500">x 0.0000037</p>
-              <p className="text-xs text-gray-500 mt-1">點擊查看錢包</p>
             </div>
           </div>
         </Card>
