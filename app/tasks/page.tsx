@@ -3,7 +3,7 @@
 import type React from "react"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Share2, MessageSquare, ChevronDown, ChevronUp, Check, ExternalLink } from 'lucide-react'
+import { MessageSquare, ChevronDown, ChevronUp, Check, ExternalLink, ShieldCheck } from "lucide-react"
 import { BottomNavigation } from "@/components/bottom-navigation"
 import { LionLogo } from "@/components/lion-logo"
 import { toast } from "@/components/ui/use-toast"
@@ -12,7 +12,7 @@ export default function TasksPage() {
   const [completedTasks, setCompletedTasks] = useState<string[]>([])
   const [referralLink, setReferralLink] = useState("")
   const [discordVerifying, setDiscordVerifying] = useState(false)
-  const [telegramVerifying, setTelegramVerifying] = useState(false)
+  const [identityVerifying, setIdentityVerifying] = useState(false)
 
   useEffect(() => {
     // Generate referral link - you can customize this logic
@@ -64,26 +64,25 @@ export default function TasksPage() {
     }
   }
 
-  // Simulate Telegram OAuth callback
-  const handleTelegramCallback = async () => {
-    setTelegramVerifying(true)
+  const handleIdentityVerification = async () => {
+    setIdentityVerifying(true)
 
     try {
       await new Promise((resolve) => setTimeout(resolve, 2000))
 
-      completeTask("telegram", "+5 $HONEY")
+      completeTask("identity", "+10 $HONEY")
 
       toast({
-        title: "Telegram 驗證成功!",
-        description: "您已成功加入社區並完成驗證",
+        title: "身分驗證成功!",
+        description: "您已成功完成身分驗證",
       })
     } catch (error) {
       toast({
         title: "驗證失敗",
-        description: "請確保您已加入 Telegram 社區",
+        description: "請確保您已完成所有驗證步驟",
       })
     } finally {
-      setTelegramVerifying(false)
+      setIdentityVerifying(false)
     }
   }
 
@@ -101,6 +100,18 @@ export default function TasksPage() {
       <div className="flex-1 container max-w-md mx-auto px-4 pt-4 space-y-4 pb-4">
         {/* Task Cards */}
         <div className="space-y-4">
+          <TaskCard
+            id="identity"
+            icon={<ShieldCheck className="h-5 w-5 text-white" />}
+            title="首要任務: 完成身分驗證"
+            description="完成 twin3 身分驗證以獲得獎勵"
+            reward="+10 $HONEY"
+            isCompleted={completedTasks.includes("identity")}
+            onComplete={() => completeTask("identity", "+10 $HONEY")}
+            onIdentityCallback={handleIdentityVerification}
+            isVerifying={identityVerifying}
+          />
+
           {/* Discord Task */}
           <TaskCard
             id="discord"
@@ -112,19 +123,6 @@ export default function TasksPage() {
             onComplete={() => completeTask("discord", "+5 $HONEY")}
             onDiscordCallback={handleDiscordCallback}
             isVerifying={discordVerifying}
-          />
-
-          {/* Telegram Task */}
-          <TaskCard
-            id="telegram"
-            icon={<MessageSquare className="h-5 w-5 text-white" />}
-            title="加入 Telegram 社區"
-            description="加入 BitBee 官方 Telegram 社區並完成身份驗證"
-            reward="+5 $HONEY"
-            isCompleted={completedTasks.includes("telegram")}
-            onComplete={() => completeTask("telegram", "+5 $HONEY")}
-            onTelegramCallback={handleTelegramCallback}
-            isVerifying={telegramVerifying}
           />
         </div>
       </div>
@@ -144,7 +142,7 @@ interface TaskCardProps {
   isCompleted?: boolean
   onComplete: () => void
   onDiscordCallback?: () => void
-  onTelegramCallback?: () => void
+  onIdentityCallback?: () => void
   referralLink?: string
   isVerifying?: boolean
 }
@@ -158,7 +156,7 @@ function TaskCard({
   isCompleted = false,
   onComplete,
   onDiscordCallback,
-  onTelegramCallback,
+  onIdentityCallback,
   referralLink = "",
   isVerifying = false,
 }: TaskCardProps) {
@@ -184,15 +182,14 @@ function TaskCard({
     }
   }
 
-  // Handle Telegram join
-  const handleTelegramJoin = (e: React.MouseEvent) => {
+  const handleIdentityVerify = (e: React.MouseEvent) => {
     e.stopPropagation()
 
-    window.open("https://t.me/twin3_ai", "_blank")
+    window.open("https://twin3.ai/verify", "_blank")
 
-    if (id === "telegram" && onTelegramCallback) {
+    if (id === "identity" && onIdentityCallback) {
       setTimeout(() => {
-        onTelegramCallback()
+        onIdentityCallback()
       }, 2000)
     }
   }
@@ -238,6 +235,71 @@ function TaskCard({
       {isExpanded && !isCompleted && (
         <div className="px-4 pb-4 pt-0">
           <div className="border-t border-gray-100 pt-3">
+            {id === "identity" && (
+              <div className="space-y-3">
+                <p className="text-sm text-gray-600">完成以下步驟以獲得獎勵：</p>
+
+                <div className="space-y-2 bg-lion-face-light p-3 rounded-lg border border-lion-face">
+                  <div className="flex items-start gap-2">
+                    <div className="bg-lion-orange text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
+                      1
+                    </div>
+                    <p className="text-sm text-gray-700">點擊下方按鈕開始驗證</p>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <div className="bg-lion-orange text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
+                      2
+                    </div>
+                    <p className="text-sm text-gray-700">在網頁中完成身份驗證</p>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <div className="bg-lion-orange text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
+                      3
+                    </div>
+                    <p className="text-sm text-gray-700">返回此頁面點擊「驗證完成」按鈕</p>
+                  </div>
+                </div>
+
+                <Button
+                  variant="teal"
+                  className="w-full flex items-center justify-center gap-2"
+                  onClick={handleIdentityVerify}
+                >
+                  <ShieldCheck className="h-4 w-4" />
+                  開始身分驗證
+                </Button>
+
+                <Button
+                  variant="orange"
+                  className="w-full flex items-center justify-center gap-2"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    if (onIdentityCallback) {
+                      onIdentityCallback()
+                    }
+                  }}
+                  disabled={isVerifying}
+                >
+                  {isVerifying ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                      驗證中...
+                    </>
+                  ) : (
+                    <>
+                      <Check className="h-4 w-4" />
+                      驗證完成
+                    </>
+                  )}
+                </Button>
+
+                <p className="text-xs text-gray-500 text-center">
+                  完成驗證後即可獲得 +10 $HONEY 獎勵 <br />
+                  <span className="text-gray-400">verify powered by twin3</span>
+                </p>
+              </div>
+            )}
+
             {id === "discord" && (
               <div className="space-y-3">
                 <p className="text-sm text-gray-600">完成以下步驟以獲得獎勵：</p>
@@ -279,68 +341,6 @@ function TaskCard({
                     e.stopPropagation()
                     if (onDiscordCallback) {
                       onDiscordCallback()
-                    }
-                  }}
-                  disabled={isVerifying}
-                >
-                  {isVerifying ? (
-                    <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                      驗證中...
-                    </>
-                  ) : (
-                    <>
-                      <Check className="h-4 w-4" />
-                      驗證加入
-                    </>
-                  )}
-                </Button>
-
-                <p className="text-xs text-gray-500 text-center">完成驗證後即可獲得 +5 $HONEY 獎勵</p>
-              </div>
-            )}
-
-            {id === "telegram" && (
-              <div className="space-y-3">
-                <p className="text-sm text-gray-600">完成以下步驟以獲得獎勵：</p>
-
-                <div className="space-y-2 bg-lion-face-light p-3 rounded-lg border border-lion-face">
-                  <div className="flex items-start gap-2">
-                    <div className="bg-lion-orange text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
-                      1
-                    </div>
-                    <p className="text-sm text-gray-700">點擊下方按鈕加入 Telegram 社區</p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <div className="bg-lion-orange text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
-                      2
-                    </div>
-                    <p className="text-sm text-gray-700">在 Telegram 中完成身份驗證</p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <div className="bg-lion-orange text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
-                      3
-                    </div>
-                    <p className="text-sm text-gray-700">返回此頁面點擊「驗證加入」按鈕</p>
-                  </div>
-                </div>
-
-                <Button
-                  variant="teal"
-                  className="w-full flex items-center justify-center gap-2"
-                  onClick={handleTelegramJoin}
-                >
-                  <ExternalLink className="h-4 w-4" />
-                  加入 Telegram 社區
-                </Button>
-
-                <Button
-                  variant="orange"
-                  className="w-full flex items-center justify-center gap-2"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    if (onTelegramCallback) {
-                      onTelegramCallback()
                     }
                   }}
                   disabled={isVerifying}
