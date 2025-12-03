@@ -41,6 +41,15 @@ export default function TasksPage() {
 
   // Simulate Discord OAuth callback
   const handleDiscordCallback = async () => {
+    if (!completedTasks.includes("identity")) {
+      toast({
+        title: "請先完成首要任務",
+        description: "您需要先完成身分驗證才能進行其他任務",
+        variant: "destructive",
+      })
+      return
+    }
+
     setDiscordVerifying(true)
 
     try {
@@ -117,13 +126,13 @@ export default function TasksPage() {
             id="discord"
             icon={<MessageSquare className="h-5 w-5 text-white" />}
             title="加入 Discord 社區"
-            description="加入 BitBee 官方 Discord 社區並完成身份驗證"
+            description="加入 BitBee 官方 Discord 社區"
             reward="+5 $HONEY"
             isCompleted={completedTasks.includes("discord")}
-            isPrimaryTaskCompleted={completedTasks.includes("identity")}
             onComplete={() => completeTask("discord", "+5 $HONEY")}
             onDiscordCallback={handleDiscordCallback}
             isVerifying={discordVerifying}
+            completedTasks={completedTasks}
           />
         </div>
       </div>
@@ -141,12 +150,12 @@ interface TaskCardProps {
   description: string
   reward: string
   isCompleted?: boolean
-  isPrimaryTaskCompleted?: boolean
   onComplete: () => void
   onDiscordCallback?: () => void
   onIdentityCallback?: () => void
   referralLink?: string
   isVerifying?: boolean
+  completedTasks?: string[]
 }
 
 function TaskCard({
@@ -156,26 +165,17 @@ function TaskCard({
   description,
   reward,
   isCompleted = false,
-  isPrimaryTaskCompleted = true,
   onComplete,
   onDiscordCallback,
   onIdentityCallback,
   referralLink = "",
   isVerifying = false,
+  completedTasks = [],
 }: TaskCardProps) {
   const [isExpanded, setIsExpanded] = useState(false)
 
   // Toggle expanded state
   const toggleExpand = () => {
-    if (id !== "identity" && !isPrimaryTaskCompleted) {
-      toast({
-        title: "提醒",
-        description: "請先完成首要任務後才可進行其他任務",
-        variant: "destructive",
-      })
-      return
-    }
-
     if (!isCompleted) {
       setIsExpanded(!isExpanded)
     }
@@ -184,6 +184,15 @@ function TaskCard({
   // Handle Discord join
   const handleDiscordJoin = (e: React.MouseEvent) => {
     e.stopPropagation()
+
+    if (id === "discord" && !completedTasks.includes("identity")) {
+      toast({
+        title: "請先完成首要任務",
+        description: "您需要先完成身分驗證才能進行其他任務",
+        variant: "destructive",
+      })
+      return
+    }
 
     window.open("https://discord.gg/zoo3", "_blank")
 
@@ -215,8 +224,7 @@ function TaskCard({
             : isExpanded
               ? "border-lion-orange shadow-lion"
               : "border-lion-face-dark shadow-sm hover:shadow-lion"
-        }
-        ${id !== "identity" && !isPrimaryTaskCompleted && !isCompleted ? "opacity-60" : ""}`}
+        }`}
     >
       <div className="flex items-start p-4 cursor-pointer" onClick={toggleExpand}>
         <div
