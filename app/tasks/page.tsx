@@ -3,16 +3,26 @@
 import type React from "react"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { MessageSquare, ChevronDown, ChevronUp, Check, ExternalLink, ShieldCheck } from "lucide-react"
+import { MessageSquare, ChevronDown, ChevronUp, Check, ExternalLink, ShieldCheck, Lock } from "lucide-react"
 import { BottomNavigation } from "@/components/bottom-navigation"
 import { LionLogo } from "@/components/lion-logo"
 import { toast } from "@/components/ui/use-toast"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 
 export default function TasksPage() {
   const [completedTasks, setCompletedTasks] = useState<string[]>([])
   const [referralLink, setReferralLink] = useState("")
   const [discordVerifying, setDiscordVerifying] = useState(false)
   const [identityVerifying, setIdentityVerifying] = useState(false)
+  const [showLockedDialog, setShowLockedDialog] = useState(false)
 
   useEffect(() => {
     // Generate referral link - you can customize this logic
@@ -135,12 +145,30 @@ export default function TasksPage() {
             onDiscordCallback={handleDiscordCallback}
             isVerifying={discordVerifying}
             isDisabled={!isIdentityCompleted()}
+            onLockedClick={() => setShowLockedDialog(true)}
           />
         </div>
       </div>
 
       {/* Bottom Navigation */}
       <BottomNavigation activeTab="tasks" />
+
+      <AlertDialog open={showLockedDialog} onOpenChange={setShowLockedDialog}>
+        <AlertDialogContent className="max-w-sm">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2 text-lion-orange">
+              <Lock className="h-5 w-5" />
+              請先完成首要任務
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-base">
+              您需要先完成身分驗證後才可進行其他任務。請先前往完成「首要任務: 完成身分驗證」。
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction className="bg-lion-orange hover:bg-lion-red">我知道了</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   )
 }
@@ -158,6 +186,7 @@ interface TaskCardProps {
   referralLink?: string
   isVerifying?: boolean
   isDisabled?: boolean
+  onLockedClick?: () => void
 }
 
 function TaskCard({
@@ -173,12 +202,20 @@ function TaskCard({
   referralLink = "",
   isVerifying = false,
   isDisabled = false,
+  onLockedClick,
 }: TaskCardProps) {
   const [isExpanded, setIsExpanded] = useState(false)
 
   // Toggle expanded state
   const toggleExpand = () => {
-    if (!isCompleted && !isDisabled) {
+    if (isDisabled && !isCompleted) {
+      if (onLockedClick) {
+        onLockedClick()
+      }
+      return
+    }
+
+    if (!isCompleted) {
       setIsExpanded(!isExpanded)
     }
   }
@@ -215,7 +252,7 @@ function TaskCard({
           isCompleted
             ? "border-green-300 bg-green-50"
             : isDisabled
-              ? "border-gray-200 bg-gray-50 opacity-60"
+              ? "border-gray-200 cursor-pointer"
               : isExpanded
                 ? "border-lion-orange shadow-lion"
                 : "border-lion-face-dark shadow-sm hover:shadow-lion"
@@ -227,13 +264,18 @@ function TaskCard({
             isCompleted ? "bg-green-500" : isDisabled ? "bg-gray-400" : "bg-gradient-to-br from-lion-orange to-lion-red"
           }`}
         >
-          {isCompleted ? <Check className="h-5 w-5 text-white" /> : icon}
+          {isCompleted ? (
+            <Check className="h-5 w-5 text-white" />
+          ) : isDisabled ? (
+            <Lock className="h-5 w-5 text-white" />
+          ) : (
+            icon
+          )}
         </div>
 
         <div className="flex-1">
           <h3 className="font-bold text-lion-accent">{title}</h3>
           <p className="text-sm text-gray-600">{description}</p>
-          {isDisabled && !isCompleted && <p className="text-xs text-red-500 mt-1">🔒 請先完成首要任務</p>}
         </div>
 
         <div className="flex flex-col items-end">
