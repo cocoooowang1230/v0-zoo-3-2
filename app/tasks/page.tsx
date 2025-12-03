@@ -190,6 +190,11 @@ function TaskCard({
 
     if (id === "discord" && !completedTasks.includes("identity")) {
       console.log("[v0] Showing prerequisite warning")
+
+      // Show browser alert for immediate visibility
+      alert("請先完成首要任務\n\n您需要先完成身分驗證才能進行其他任務")
+
+      // Also show toast notification
       toast({
         title: "請先完成首要任務",
         description: "您需要先完成身分驗證才能進行其他任務",
