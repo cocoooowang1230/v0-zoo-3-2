@@ -279,6 +279,12 @@ export default function Home() {
                 : `連續登入: ${loginStreak.currentDay + 1}/7 天`}
             </p>
 
+            <div className="flex items-center justify-center gap-1 text-sm">
+              <Gift className="h-4 w-4 text-lion-orange" />
+              <span className="text-gray-700">連續完成七天：</span>
+              <span className="font-bold text-sm text-orange-500">+0.0000037 WBTC</span>
+            </div>
+
             <Button
               variant={todaysClaimed ? "teal" : "orange"}
               className="w-full"
