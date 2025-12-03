@@ -185,7 +185,11 @@ function TaskCard({
   const handleDiscordJoin = (e: React.MouseEvent) => {
     e.stopPropagation()
 
+    console.log("[v0] Discord button clicked, completedTasks:", completedTasks)
+    console.log("[v0] Identity completed?", completedTasks.includes("identity"))
+
     if (id === "discord" && !completedTasks.includes("identity")) {
+      console.log("[v0] Showing prerequisite warning")
       toast({
         title: "請先完成首要任務",
         description: "您需要先完成身分驗證才能進行其他任務",
