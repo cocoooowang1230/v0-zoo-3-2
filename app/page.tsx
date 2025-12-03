@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Progress } from "@/components/ui/progress"
-import { Gift, Copy, Users, Check } from "lucide-react"
+import { Gift, Copy, Users, Check, Share2 } from "lucide-react"
 import { toast } from "@/components/ui/use-toast"
 import { BottomNavigation } from "@/components/bottom-navigation"
 import { LionLogo } from "@/components/lion-logo"
@@ -164,8 +164,15 @@ export default function Home() {
     }
 
     try {
-      // Check if Web Share API is supported
-      if (navigator.share) {
+      // Check if Web Share API is supported and available
+      if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+        await navigator.share(shareData)
+        toast({
+          title: "分享成功!",
+          description: "感謝您分享 BitBee",
+        })
+      } else if (navigator.share) {
+        // Try to share even without canShare check (some browsers)
         await navigator.share(shareData)
         toast({
           title: "分享成功!",
@@ -174,12 +181,24 @@ export default function Home() {
       } else {
         // Fallback: copy to clipboard if share is not supported
         await copyReferralLink()
+        toast({
+          title: "已複製連結",
+          description: "您的瀏覽器不支援分享功能，連結已複製",
+        })
       }
-    } catch (err) {
-      // User cancelled share or error occurred
-      if (err.name !== "AbortError") {
-        console.error("Share failed:", err)
+    } catch (err: any) {
+      // User cancelled share
+      if (err.name === "AbortError") {
+        return
       }
+
+      // Permission or other error - fallback to copy
+      console.error("Share failed:", err.message)
+      await copyReferralLink()
+      toast({
+        title: "已複製連結",
+        description: "連結已複製到剪貼簿，您可以手動分享",
+      })
     }
   }
 
@@ -397,23 +416,7 @@ export default function Home() {
               className="w-full flex items-center justify-center gap-2 border-lion-orange text-lion-orange hover:bg-lion-orange/10 bg-transparent"
               onClick={shareReferralLink}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <circle cx="18" cy="5" r="3" />
-                <circle cx="6" cy="12" r="3" />
-                <circle cx="18" cy="19" r="3" />
-                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
-                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
-              </svg>
+              <Share2 className="h-5 w-5" />
               分享
             </Button>
           </div>
