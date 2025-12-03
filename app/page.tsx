@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Progress } from "@/components/ui/progress"
-import { Gift, Copy, Users, Check, Share2 } from "lucide-react"
+import { Gift, Copy, Users, Check } from "lucide-react"
 import { toast } from "@/components/ui/use-toast"
 import { BottomNavigation } from "@/components/bottom-navigation"
 import { LionLogo } from "@/components/lion-logo"
@@ -159,46 +159,29 @@ export default function Home() {
   const shareReferralLink = async () => {
     const shareData = {
       title: "加入 BitBee",
-      text: "使用我的邀請連結加入 BitBee，一起獲得獎勵！",
+      text: "快來加入 BitBee 一起獲取獎勵！",
       url: referralLink,
     }
 
     try {
-      // Check if Web Share API is supported and available
-      if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
-        await navigator.share(shareData)
-        toast({
-          title: "分享成功!",
-          description: "感謝您分享 BitBee",
-        })
-      } else if (navigator.share) {
-        // Try to share even without canShare check (some browsers)
+      if (navigator.share) {
         await navigator.share(shareData)
         toast({
           title: "分享成功!",
           description: "感謝您分享 BitBee",
         })
       } else {
-        // Fallback: copy to clipboard if share is not supported
+        // Fallback to copy if share API not available
         await copyReferralLink()
+      }
+    } catch (err) {
+      if (err.name !== "AbortError") {
         toast({
-          title: "已複製連結",
-          description: "您的瀏覽器不支援分享功能，連結已複製",
+          title: "分享失敗",
+          description: "請使用複製連結功能",
+          variant: "destructive",
         })
       }
-    } catch (err: any) {
-      // User cancelled share
-      if (err.name === "AbortError") {
-        return
-      }
-
-      // Permission or other error - fallback to copy
-      console.error("Share failed:", err.message)
-      await copyReferralLink()
-      toast({
-        title: "已複製連結",
-        description: "連結已複製到剪貼簿，您可以手動分享",
-      })
     }
   }
 
@@ -394,10 +377,29 @@ export default function Home() {
             </div>
 
             <Button
-              className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold rounded-full shadow-md"
+              variant={linkCopied ? "teal" : "orange"}
+              className="w-full flex items-center justify-center gap-2"
+              onClick={copyReferralLink}
+            >
+              {linkCopied ? (
+                <>
+                  <Check className="h-5 w-5" />
+                  已複製邀請連結
+                </>
+              ) : (
+                <>
+                  <Copy className="h-5 w-5" />
+                  複製邀請連結
+                </>
+              )}
+            </Button>
+
+            <Button
+              variant="orange"
+              className="w-full flex items-center justify-center gap-2"
               onClick={shareReferralLink}
             >
-              <Share2 className="h-5 w-5" />
+              <Users className="h-5 w-5" />
               分享
             </Button>
           </div>
