@@ -108,19 +108,51 @@ export default function Home() {
   }
 
   // Function to copy referral link
-  const copyReferralLink = () => {
-    navigator.clipboard.writeText(referralLink)
-    setLinkCopied(true)
+  const copyReferralLink = async () => {
+    try {
+      await navigator.clipboard.writeText(referralLink)
+      setLinkCopied(true)
 
-    toast({
-      title: "連結已複製!",
-      description: "邀請連結已複製到剪貼簿",
-    })
+      toast({
+        title: "連結已複製!",
+        description: "邀請連結已複製到剪貼簿",
+      })
 
-    // Reset the button state after 3 seconds
-    setTimeout(() => {
-      setLinkCopied(false)
-    }, 3000)
+      setTimeout(() => {
+        setLinkCopied(false)
+      }, 3000)
+    } catch (err) {
+      // Fallback method for when clipboard API fails
+      const textArea = document.createElement("textarea")
+      textArea.value = referralLink
+      textArea.style.position = "fixed"
+      textArea.style.left = "-999999px"
+      document.body.appendChild(textArea)
+      textArea.focus()
+      textArea.select()
+
+      try {
+        document.execCommand("copy")
+        setLinkCopied(true)
+
+        toast({
+          title: "連結已複製!",
+          description: "邀請連結已複製到剪貼簿",
+        })
+
+        setTimeout(() => {
+          setLinkCopied(false)
+        }, 3000)
+      } catch (fallbackErr) {
+        toast({
+          title: "複製失敗",
+          description: "請手動複製連結",
+          variant: "destructive",
+        })
+      } finally {
+        document.body.removeChild(textArea)
+      }
+    }
   }
 
   // Function to connect wallet
