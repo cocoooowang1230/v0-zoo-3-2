@@ -394,26 +394,7 @@ export default function Home() {
             </div>
 
             <Button
-              variant={linkCopied ? "teal" : "orange"}
-              className="w-full flex items-center justify-center gap-2"
-              onClick={copyReferralLink}
-            >
-              {linkCopied ? (
-                <>
-                  <Check className="h-5 w-5" />
-                  已複製邀請連結
-                </>
-              ) : (
-                <>
-                  <Copy className="h-5 w-5" />
-                  複製邀請連結
-                </>
-              )}
-            </Button>
-
-            <Button
-              variant="outline"
-              className="w-full flex items-center justify-center gap-2 border-lion-orange text-lion-orange hover:bg-lion-orange/10 bg-transparent"
+              className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold rounded-full shadow-md"
               onClick={shareReferralLink}
             >
               <Share2 className="h-5 w-5" />
