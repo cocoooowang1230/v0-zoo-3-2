@@ -122,7 +122,7 @@ export default function TasksPage() {
           <TaskCard
             id="identity"
             icon={<ShieldCheck className="h-5 w-5 text-white" />}
-            title="首要任務: 完成身分驗證"
+            title="首要任務: 證明你是人類"
             description="完成 twin3 身分驗證以獲得獎勵"
             reward="+10 $HONEY"
             isCompleted={completedTasks.includes("identity")}
